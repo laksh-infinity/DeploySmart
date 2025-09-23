@@ -1,27 +1,50 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 
-# Configuration values
-define('DEPLOYSMART_BASE_URL', 'https://your.subdomain.domain.com');
-define('DEPLOYSMART_TEMP_DIR', sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'deploysmart');
+// Temp directory
+if (!defined('DEPLOYSMART_TEMP_DIR')) {
+    define('DEPLOYSMART_TEMP_DIR', sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'deploysmart'));
+}
 
 if (!is_dir(DEPLOYSMART_TEMP_DIR)) {
     mkdir(DEPLOYSMART_TEMP_DIR, 0700, true);
 }
 
-define('SMTP_HOST', 'SMTP.YOURDOMAIN.COM');
-define('SMTP_PORT', 587);
-define('SMTP_USER', 'SMTP-USER');
-define('SMTP_PASS', 'SMTP-PASS');
-define('SMTP_FROM', 'no-reply@yourdomain.com');
+// Base URL
+if (!defined('DEPLOYSMART_BASE_URL')) {
+    define('DEPLOYSMART_BASE_URL', 'https://your.subdomain.domain.com');
+}
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'Your-DB');
-define('DB_USER', 'Your-DB-User');
-define('DB_PASS', 'Your-DB-Pass');
-define('DB_CHARSET', 'utf8mb4');
+// Database settings
+if (!defined('DB_HOST')) {
+    define('DB_HOST', 'localhost');
+}
 
-# PDO setup
+if (!defined('DB_NAME')) {
+    define('DB_NAME', 'Your-DB');
+}
+
+if (!defined('DB_USER')) {
+    define('DB_USER', 'Your-DB-User');
+}
+
+if (!defined('DB_PASS')) {
+    define('DB_PASS', 'Your-DB-Pass');
+}
+
+if (!defined('DB_CHARSET')) {
+    define('DB_CHARSET', 'utf8mb4');
+}
+
+// SMTP config MFA reset, uncomment if needed (Highly recommended!)
+//define('SMTP_HOST', 'SMTP.YOURDOMAIN.COM');
+//define('SMTP_PORT', 587);
+//define('SMTP_USER', 'SMTP-USER');
+//define('SMTP_PASS', 'SMTP-PASS');
+//define('SMTP_FROM', 'no-reply@yourdomain.com');
+
+# -- Careful now! -- No need to edit below this line.
+# PDO setup 
 $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
 
 $options = [
