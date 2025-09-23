@@ -1,4 +1,4 @@
-# $${\color{white}Deploy\color{#0fda00}Smart}$$
+# $$\textsf{\color{white}Deploy\textsf{\color{#0fda00}Smart}}$$
 
 DeploySmart is an application to ease sys admin setup of new/reinstall computers by utilizing autounattend.xml and powershell to install applications from a list easier.
 
