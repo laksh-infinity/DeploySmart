@@ -1,0 +1,58 @@
+<!--
+	<div class="block">
+      	<p class="date">2025-09-20</p>
+		<h3>TOTP/MFA</h3>
+		<p>
+We have just published the option to utilize TOTP authentication to strengthen login security. we strongly recommend that you enable this on your account.
+		</p>
+	</div>
+-->
+	<div class="block">
+      	<p class="date">2025-09-22</p>
+		<h3>Updated menu structure</h3>
+		<p>
+Right now the menu looks some where in between finished and barely working, we are actively working on resolving the menu and should be functional soon enough.
+		</p>
+	</div>
+	<div class="block">
+      	<p class="date">2025-09-22</p>
+		<h3>MSP/Multi company management</h3>
+		<p>
+For the very first time a user can now create companies by them selves and after that configure apps utilized by their own autounattend.xml! Woho!
+		</p>
+	</div>
+	<div class="block">
+      	<p class="date">2025-09-20</p>
+		<h3>TOTP/MFA</h3>
+		<p>
+We have just published the option to utilize TOTP authentication to strengthen login security. we strongly recommend that you enable this on your account.
+		</p>
+	</div>
+	<div class="block">
+      	<p class="date">2025-09-20</p>
+		<h3>Generate autounattended.xml</h3>
+		<p>
+Now you can configure and generate your own custom company autounattend.xml and autounattend.iso for VM/Hardware deployments without autounattend.xml on your USB drive!
+		</p>
+	</div>
+	<div class="block">
+      	<p class="date">2025-08-28</p>
+		<h3>Company Settings</h3>
+		<p>
+Now you can access company settings and add/remove users to/from your company!
+		</p>
+	</div>
+	<div class="block">
+      	<p class="date">2025-08-27</p>
+		<h3>Now you are able to add your own private scripts!</h3>
+		<p>
+These are company specific and privately stashed away from other companies and sources!
+<br><br>
+You can add your own scripts right now trough the "create script" page, they will be added in a new tab on your "Configure Applications" page in the header.
+		</p>
+	</div>
+
+
+
+
+

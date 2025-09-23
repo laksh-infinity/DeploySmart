@@ -1,0 +1,18 @@
+[
+    {
+        "Name": "Install_ControlR_Win-x64",
+        "Url": "https:\/\/deploysmart.dev.mspot.se\/config\/ds_68ac0df2e04f8\/scripts\/Install_ControlR_Win-x64.ps1"
+    },
+    {
+        "Name": "Install_ControlR_Win-x86",
+        "Url": "https:\/\/deploysmart.dev.mspot.se\/config\/ds_68ac0df2e04f8\/scripts\/Install_ControlR_Win-x86.ps1"
+    },
+    {
+        "Name": "Remotely_RMM_-_Mspotse",
+        "Url": "https:\/\/deploysmart.dev.mspot.se\/config\/ds_68ac0df2e04f8\/scripts\/Remotely_RMM_-_Mspotse.ps1"
+    },
+    {
+        "Name": "yesy",
+        "Url": "https:\/\/deploysmart.dev.mspot.se\/config\/ds_68ac0df2e04f8\/scripts\/yesy.ps1"
+    }
+]

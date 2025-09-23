@@ -1,0 +1,14 @@
+	<div class="block">
+      	<p class="date">2025-09-21</p>
+		<h3>When will 1.0 be released?</h3>
+		<p>
+Im constantly making changes to how DeploySmart works, every iteration makes a huge difference and im at the point were i don't even car about the version number any more...
+<br><br>
+It's just going way to fast and i don't feel like the system is "ready" just yet, all the time, even to im well past the point where i initially had planned.
+<br><br>
+I constantly com up with things that would make huge differences, and im actually in the middle of "11-ifying" the installer script right now.
+
+Since the past few days, multiple iterations have been released with new features like TOTP or MFA if you will, auto generated autounattend.xml files (that will pick up your application lists) and i then figured i wanted to try that out in a VM, and then i didn't want to make each autounattend.xml in to a .iso, so now im auto generating those too? 😂
+Oh well, at least it's all working* and ill probably come up with more stuff im going to want to add, if you would want to test it out, please feel free to send me a support request support (at) mspot.se and ill make sure you gain access, for now there is ~35 applications availiable to grab (all downloaded from their respective websites/github). And the best part, you can even set up your own application scripts in your dashboard.
+		</p>
+	</div>

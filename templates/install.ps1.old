@@ -1,0 +1,147 @@
+# Script made by Mattias Magnusson 2025-05-20
+# Dynamically installs applications from a JSON list hosted on mmk-dns1.mmk.ki.se
+# Updated 2025-08-15
+
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+$tp = "C:\TempPath"
+$tl = "C:\logs"
+$ID = "{DEPLOYMENT_ID}"
+if (-not (Test-Path $tp)) {
+    New-Item -Path $tp -ItemType Directory -Force | Out-Null
+}
+$logPath = "$tl\install_log.txt"
+New-Item -Path $logPath -ItemType File -Force | Out-Null
+
+function Test-InternetConnection {
+    try {
+        $null = Invoke-WebRequest -Uri "https://deploysmart.dev.mspot.se" -UseBasicParsing -TimeoutSec 5
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+# Network test form
+$formNetwork = New-Object System.Windows.Forms.Form
+$formNetwork.Text = "Network Test"
+$formNetwork.Size = New-Object System.Drawing.Size(300,150)
+$formNetwork.StartPosition = "CenterScreen"
+
+$labelStatus = New-Object System.Windows.Forms.Label
+$labelStatus.Size = New-Object System.Drawing.Size(280,30)
+$labelStatus.Location = New-Object System.Drawing.Point(10,10)
+$labelStatus.Text = "Testing network connection..."
+$formNetwork.Controls.Add($labelStatus)
+
+$buttonRetry = New-Object System.Windows.Forms.Button
+$buttonRetry.Size = New-Object System.Drawing.Size(100,30)
+$buttonRetry.Location = New-Object System.Drawing.Point(10,50)
+$buttonRetry.Text = "Try Again"
+$buttonRetry.Add_Click({
+    $labelStatus.Text = "Testing network connection..."
+    $formNetwork.Refresh()
+    if (Test-InternetConnection) {
+        $formNetwork.Close()
+    } else {
+        [System.Windows.Forms.MessageBox]::Show("No internet connection. Please connect and try again.", "Error", 'RetryCancel', 'Error')
+    }
+})
+$formNetwork.Controls.Add($buttonRetry)
+
+$buttonCancel = New-Object System.Windows.Forms.Button
+$buttonCancel.Size = New-Object System.Drawing.Size(100,30)
+$buttonCancel.Location = New-Object System.Drawing.Point(120,50)
+$buttonCancel.Text = "Cancel"
+$buttonCancel.Add_Click({
+    $formNetwork.Close()
+    exit 1
+})
+$formNetwork.Controls.Add($buttonCancel)
+
+$formNetwork.Show()
+$formNetwork.Refresh()
+if (Test-InternetConnection) {
+    $formNetwork.Close()
+} else {
+    [System.Windows.Forms.MessageBox]::Show("No internet connection. Please connect and try again.", "Error", 'RetryCancel', 'Error')
+}
+
+# Load application list
+$jsonUrl = "https://deploysmart.dev.mspot.se/deploy.php?ID=$ID"
+try {
+    $applications = Invoke-RestMethod -Uri $jsonUrl -UseBasicParsing
+} catch {
+    [System.Windows.Forms.MessageBox]::Show("Failed to load application list from $jsonUrl", "Error", 'OK', 'Error')
+    exit 1
+}
+
+# Installation form
+$formInstall = New-Object System.Windows.Forms.Form
+$formInstall.Text = "Installing Applications"
+$formInstall.Size = New-Object System.Drawing.Size(400,400)
+$formInstall.StartPosition = "Manual"
+$formInstall.Location = New-Object System.Drawing.Point(80, 80)
+
+$labelInfo = New-Object System.Windows.Forms.Label
+$labelInfo.Size = New-Object System.Drawing.Size(365, 40)
+$labelInfo.Location = New-Object System.Drawing.Point(10, 10)
+$labelInfo.Text = "This may take a while. Please leave the computer on and do not close this window until the installation is complete."
+$labelInfo.AutoSize = $false
+$labelInfo.TextAlign = 'TopLeft'
+$labelInfo.Font = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing.FontStyle]::Regular)
+$formInstall.Controls.Add($labelInfo)
+
+$listBox = New-Object System.Windows.Forms.ListBox
+$listBox.Size = New-Object System.Drawing.Size(365,295)
+$listBox.Location = New-Object System.Drawing.Point(10, 60)
+$formInstall.Controls.Add($listBox)
+
+foreach ($app in $applications) {
+    $listBox.Items.Add("⏳ Waiting: $($app.Name)")
+}
+
+$formInstall.Show()
+
+$failedApps = @()
+
+# First pass
+for ($i = 0; $i -lt $applications.Count; $i++) {
+    $app = $applications[$i]
+    $listBox.Items[$i] = "🔧 Installing: $($app.Name)"
+    $formInstall.Refresh()
+    try {
+        irm $app.Url | iex
+        $listBox.Items[$i] = "✅ Installed: $($app.Name)"
+		Add-Content -Path $logPath -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Installed $($app.Name)"
+    } catch {
+        $listBox.Items[$i] = "❌ Failed: $($app.Name)"
+        $errorMessage = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Failed to install $($app.Name): $($_.Exception.Message) - Will retry..."
+        Add-Content -Path $logPath -Value $errorMessage
+        $failedApps += $app
+    }
+    Start-Sleep -Seconds 1
+}
+
+# Retry pass
+if ($failedApps.Count -gt 0) {
+    Add-Content -Path $logPath -Value "`n--- RETRYING FAILED INSTALLATIONS ---`n"
+    foreach ($app in $failedApps) {
+        $index = $applications.IndexOf($app)
+        $listBox.Items[$index] = "🔁 Retrying: $($app.Name)"
+        $formInstall.Refresh()
+        try {
+            irm $app.Url | iex
+            $listBox.Items[$index] = "✅ Installed on Retry: $($app.Name)"
+			Add-Content -Path $logPath -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Installed $($app.Name) on retry."
+        } catch {
+            $listBox.Items[$index] = "❌ Still Failed: $($app.Name)"
+            $errorMessage = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Retry failed for $($app.Name): $($_.Exception.Message)"
+            Add-Content -Path $logPath -Value $errorMessage
+        }
+        Start-Sleep -Seconds 1
+    }
+}
+
+Start-Sleep -Seconds 30
+$formInstall.Close()

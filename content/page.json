@@ -1,0 +1,35 @@
+[
+    {
+        "type": "hero",
+        "image": "https:\/\/deploysmart.dev.mspot.se\/assets\/images\/hero.png",
+        "html": " <h1><span class=\"deploy\">Deploy<\/span><span class=\"smart\">Smart<\/span><\/h1>\n        <p>Automated Windows deployment with precision, speed, and security.<\/p>\n        <a href=\"how-to.php\">Get Started<\/a>",
+        "css": ".hero-title { color: #ff6600; font-size: 48px; }",
+        "class": "custom-hero"
+    },
+    {
+        "type": "text",
+        "content": "Here’s some introductory text about our services and values.",
+        "css": "",
+        "class": ""
+    },
+    {
+        "type": "image",
+        "src": "https:\/\/example.com\/team.jpg",
+        "caption": "Meet our team",
+        "css": "",
+        "class": ""
+    },
+    {
+        "type": "code",
+        "code": "console.log('Hello, world!');",
+        "css": "",
+        "class": ""
+    },
+  	{
+		"type": "info",
+		"title": "Step 1: Register",
+		"description": "Create your company profile and invite users.",
+		"icon": "fa-user-plus",
+		"class": "info-step"
+	}
+]

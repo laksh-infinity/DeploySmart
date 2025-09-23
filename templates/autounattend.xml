@@ -1,0 +1,954 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+	<!--https://schneegans.de/windows/unattend-generator/?LanguageMode=Unattended&UILanguage=en-US&Locale=sv-SE&Keyboard=0000041d&GeoLocation=221&ProcessorArchitecture=x86&ProcessorArchitecture=amd64&ProcessorArchitecture=arm64&BypassRequirementsCheck=true&BypassNetworkCheck=true&ComputerNameMode=Random&CompactOsMode=Default&TimeZoneMode=Explicit&TimeZone=W.+Europe+Standard+Time&PartitionMode=Unattended&PartitionLayout=GPT&EspSize=300&RecoveryMode=Partition&RecoverySize=1000&DiskAssertionMode=Skip&WindowsEditionMode=Custom&ProductKey=ALPHA-12BHJ-12BHJ-RTG84-APLHA&InstallFromMode=Automatic&UserAccountMode=Unattended&AccountName0=ladmin&AccountDisplayName0=&AccountPassword0=gxx3zcx2010&AccountGroup0=Administrators&AutoLogonMode=Own&ObscurePasswords=true&PasswordExpirationMode=Unlimited&LockoutMode=Default&HideFiles=Hidden&TaskbarSearch=Box&TaskbarIconsMode=Default&DisableWidgets=true&LeftTaskbar=true&HideTaskViewButton=true&DisableBingResults=true&StartTilesMode=Empty&StartPinsMode=Empty&DisableAppSuggestions=true&PreventDeviceEncryption=true&HideEdgeFre=true&DisableEdgeStartupBoost=true&EffectsMode=Default&DesktopIconsMode=Default&WifiMode=Unattended&WifiName=Molmed&WifiAuthentication=WPA2PSK&WifiPassword=internet%40molmed&ExpressSettings=DisableAll&KeysMode=Skip&StickyKeysMode=Default&ColorMode=Default&WallpaperMode=Default&Remove3DViewer=true&RemoveBingSearch=true&RemoveClipchamp=true&RemoveCopilot=true&RemoveCortana=true&RemoveDevHome=true&RemoveFamily=true&RemoveFeedbackHub=true&RemoveGetHelp=true&RemoveInternetExplorer=true&RemoveMailCalendar=true&RemoveMaps=true&RemoveMixedReality=true&RemoveNews=true&RemoveOffice365=true&RemoveOutlook=true&RemovePaint3D=true&RemovePeople=true&RemoveQuickAssist=true&RemoveSkype=true&RemoveSolitaire=true&RemoveStepsRecorder=true&RemoveTeams=true&RemoveGetStarted=true&RemoveWallet=true&RemoveWordPad=true&RemoveXboxApps=true&RemoveYourPhone=true&SystemScript0=w32tm+%2Fconfig+%2Fmanualpeerlist%3A%27ntp.ki.se%27+%2Fsyncfromflags%3AMANUAL+%2Freliable%3Ayes%0D%0ASet-ItemProperty+-Path+%22HKCU%3A%5CSoftware%5CMicrosoft%5CWindows%5CCurrentVersion%5CFeeds%22+-Name+%22ShellFeedsTaskbarOpenOnHover%22+-PropertyType+DWORD+-Value+0+-Force%0D%0ASet-ItemProperty+-Path+%22HKLM%3A%5CSoftware%5CPolicies%5CMicrosoft%5CWindows%5CWindows+Search%22+-Name+%22EnableDynamicContentInWSB%22+-PropertyType+DWORD+-Value+0+-Force&SystemScriptType0=Cmd&FirstLogonScript0=w32tm+%2Fconfig+%2Fmanualpeerlist%3A%27ntp.ki.se%27+%2Fsyncfromflags%3AMANUAL+%2Freliable%3Ayes&FirstLogonScriptType0=Cmd&FirstLogonScript1=%23+Script+made+by+Mattias+Magnusson+2025-06-04%0D%0A%23+Dynamically+installs+applications+from+a+JSON+list+hosted+on+mmk-dns1%0D%0A%0D%0AAdd-Type+-AssemblyName+System.Windows.Forms%0D%0AAdd-Type+-AssemblyName+System.Drawing%0D%0A%0D%0A%24tp+%3D+%22C%3A%5CTempPath%22%0D%0Amkdir+%24tp+-Force+%7C+Out-Null%0D%0A%0D%0A%23+Function+to+check+internet+connectivity%0D%0Afunction+Test-InternetConnection+%7B%0D%0A++++try+%7B%0D%0A++++++++%24null+%3D+Invoke-WebRequest+-Uri+%22https%3A%2F%2Fmmk-dns1.mmk.ki.se%22+-UseBasicParsing+-TimeoutSec+5%0D%0A++++++++return+%24true%0D%0A++++%7D+catch+%7B%0D%0A++++++++return+%24false%0D%0A++++%7D%0D%0A%7D%0D%0A%0D%0A%23+Show+network+test+form%0D%0A%24formNetwork+%3D+New-Object+System.Windows.Forms.Form%0D%0A%24formNetwork.Text+%3D+%22Network+Test%22%0D%0A%24formNetwork.Size+%3D+New-Object+System.Drawing.Size%28300%2C150%29%0D%0A%24formNetwork.StartPosition+%3D+%22CenterScreen%22%0D%0A%0D%0A%24labelStatus+%3D+New-Object+System.Windows.Forms.Label%0D%0A%24labelStatus.Size+%3D+New-Object+System.Drawing.Size%28280%2C30%29%0D%0A%24labelStatus.Location+%3D+New-Object+System.Drawing.Point%2810%2C10%29%0D%0A%24labelStatus.Text+%3D+%22Testing+network+connection...%22%0D%0A%24formNetwork.Controls.Add%28%24labelStatus%29%0D%0A%0D%0A%24buttonRetry+%3D+New-Object+System.Windows.Forms.Button%0D%0A%24buttonRetry.Size+%3D+New-Object+System.Drawing.Size%28100%2C30%29%0D%0A%24buttonRetry.Location+%3D+New-Object+System.Drawing.Point%2810%2C50%29%0D%0A%24buttonRetry.Text+%3D+%22Try+Again%22%0D%0A%24buttonRetry.Add_Click%28%7B%0D%0A++++%24labelStatus.Text+%3D+%22Testing+network+connection...%22%0D%0A++++%24formNetwork.Refresh%28%29%0D%0A++++if+%28Test-InternetConnection%29+%7B%0D%0A++++++++%5BSystem.Windows.Forms.MessageBox%5D%3A%3AShow%28%22Network+connection+is+OK%22%2C+%22Success%22%2C+%27OK%27%2C+%27Information%27%29%0D%0A++++++++%24formNetwork.Close%28%29%0D%0A++++%7D+else+%7B%0D%0A++++++++%5BSystem.Windows.Forms.MessageBox%5D%3A%3AShow%28%22No+internet+connection.+Please+connect+and+try+again.%22%2C+%22Error%22%2C+%27RetryCancel%27%2C+%27Error%27%29%0D%0A++++%7D%0D%0A%7D%29%0D%0A%24formNetwork.Controls.Add%28%24buttonRetry%29%0D%0A%0D%0A%24buttonCancel+%3D+New-Object+System.Windows.Forms.Button%0D%0A%24buttonCancel.Size+%3D+New-Object+System.Drawing.Size%28100%2C30%29%0D%0A%24buttonCancel.Location+%3D+New-Object+System.Drawing.Point%28120%2C50%29%0D%0A%24buttonCancel.Text+%3D+%22Cancel%22%0D%0A%24buttonCancel.Add_Click%28%7B%0D%0A++++%24formNetwork.Close%28%29%0D%0A++++exit+1%0D%0A%7D%29%0D%0A%24formNetwork.Controls.Add%28%24buttonCancel%29%0D%0A%0D%0A%24formNetwork.Show%28%29%0D%0A%24formNetwork.Refresh%28%29%0D%0Aif+%28Test-InternetConnection%29+%7B%0D%0A++++%5BSystem.Windows.Forms.MessageBox%5D%3A%3AShow%28%22Network+connection+is+OK%22%2C+%22Success%22%2C+%27OK%27%2C+%27Information%27%29%0D%0A++++%24formNetwork.Close%28%29%0D%0A%7D+else+%7B%0D%0A++++%5BSystem.Windows.Forms.MessageBox%5D%3A%3AShow%28%22No+internet+connection.+Please+connect+and+try+again.%22%2C+%22Error%22%2C+%27RetryCancel%27%2C+%27Error%27%29%0D%0A%7D%0D%0A%0D%0A%23+Load+application+list+from+JSON%0D%0A%24jsonUrl+%3D+%22https%3A%2F%2Fmmk-dns1.mmk.ki.se%2Fautounattended%2Fscripts%2Fapplications.json%22%0D%0Atry+%7B%0D%0A++++%24applications+%3D+Invoke-RestMethod+-Uri+%24jsonUrl+-UseBasicParsing%0D%0A%7D+catch+%7B%0D%0A++++%5BSystem.Windows.Forms.MessageBox%5D%3A%3AShow%28%22Failed+to+load+application+list+from+%24jsonUrl%22%2C+%22Error%22%2C+%27OK%27%2C+%27Error%27%29%0D%0A++++exit+1%0D%0A%7D%0D%0A%0D%0A%23+Show+installation+form%0D%0A%24formInstall+%3D+New-Object+System.Windows.Forms.Form%0D%0A%24formInstall.Text+%3D+%22Installing+Applications%22%0D%0A%24formInstall.Size+%3D+New-Object+System.Drawing.Size%28400%2C300%29%0D%0A%24formInstall.StartPosition+%3D+%22Manual%22%0D%0A%24formInstall.Location+%3D+New-Object+System.Drawing.Point%2880%2C+80%29%0D%0A%0D%0A%0D%0A%24labelInfo+%3D+New-Object+System.Windows.Forms.Label%0D%0A%24labelInfo.Size+%3D+New-Object+System.Drawing.Size%28360%2C+40%29%0D%0A%24labelInfo.Location+%3D+New-Object+System.Drawing.Point%2810%2C+10%29%0D%0A%24labelInfo.Text+%3D+%22This+may+take+a+while.+Please+leave+the+computer+on+and+do+not+close+this+window+until+the+installation+is+complete.%22%0D%0A%24labelInfo.AutoSize+%3D+%24false%0D%0A%24labelInfo.TextAlign+%3D+%27TopLeft%27%0D%0A%24labelInfo.Font+%3D+New-Object+System.Drawing.Font%28%22Segoe+UI%22%2C+9%2C+%5BSystem.Drawing.FontStyle%5D%3A%3ARegular%29%0D%0A%24formInstall.Controls.Add%28%24labelInfo%29%0D%0A%0D%0A%24listBox+%3D+New-Object+System.Windows.Forms.ListBox%0D%0A%24listBox.Size+%3D+New-Object+System.Drawing.Size%28360%2C190%29%0D%0A%24listBox.Location+%3D+New-Object+System.Drawing.Point%2810%2C+60%29%0D%0A%24formInstall.Controls.Add%28%24listBox%29%0D%0A%0D%0Aforeach+%28%24app+in+%24applications%29+%7B%0D%0A++++%24listBox.Items.Add%28%22%26%23x23F3%3B+Waiting%3A+%24%28%24app.Name%29%22%29%0D%0A%7D%0D%0A%0D%0A%24formInstall.Show%28%29%0D%0A%0D%0Afor+%28%24i+%3D+0%3B+%24i+-lt+%24applications.Count%3B+%24i%2B%2B%29+%7B%0D%0A++++%24app+%3D+%24applications%5B%24i%5D%0D%0A++++%24listBox.Items%5B%24i%5D+%3D+%22%26%23x1F527%3B+Installing%3A+%24%28%24app.Name%29%22%0D%0A++++%24formInstall.Refresh%28%29%0D%0A++++try+%7B%0D%0A++++++++irm+%24app.Url+%7C+iex%0D%0A++++++++%24listBox.Items%5B%24i%5D+%3D+%22%26%23x2705%3B+Installed%3A+%24%28%24app.Name%29%22%0D%0A++++%7D+catch+%7B%0D%0A++++++++%24listBox.Items%5B%24i%5D+%3D+%22%26%23x274C%3B+Failed%3A+%24%28%24app.Name%29%22%0D%0A++++%7D%0D%0A++++Start-Sleep+-Seconds+1%0D%0A%7D%0D%0A%0D%0AStart-Sleep+-Seconds+300%0D%0A%24formInstall.Close%28%29&FirstLogonScriptType1=Ps1&FirstLogonScript2=irm+https%3A%2F%2Fmmk-dns1.mmk.ki.se%2Fautounattended%2Fscripts%2FHostname.ps1+%7C+iex&FirstLogonScriptType2=Ps1&UserOnceScript0=w32tm+%2Fconfig+%2Fmanualpeerlist%3A%27ntp.ki.se%27+%2Fsyncfromflags%3AMANUAL+%2Freliable%3Ayes&UserOnceScriptType0=Cmd&WdacMode=Skip-->
+	<settings pass="offlineServicing"></settings>
+	<settings pass="windowsPE">
+		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<SetupUILanguage>
+				<UILanguage>en-US</UILanguage>
+			</SetupUILanguage>
+			<InputLocale>041d:0000041d</InputLocale>
+			<SystemLocale>sv-SE</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>sv-SE</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="arm64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<SetupUILanguage>
+				<UILanguage>en-US</UILanguage>
+			</SetupUILanguage>
+			<InputLocale>041d:0000041d</InputLocale>
+			<SystemLocale>sv-SE</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>sv-SE</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<SetupUILanguage>
+				<UILanguage>en-US</UILanguage>
+			</SetupUILanguage>
+			<InputLocale>041d:0000041d</InputLocale>
+			<SystemLocale>sv-SE</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>sv-SE</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<ImageInstall>
+				<OSImage>
+					<InstallTo>
+						<DiskID>0</DiskID>
+						<PartitionID>3</PartitionID>
+					</InstallTo>
+				</OSImage>
+			</ImageInstall>
+			<UserData>
+				<ProductKey>
+					<Key>ALPHA-12BHJ-12BHJ-RTG84-APLHA</Key>
+					<WillShowUI>OnError</WillShowUI>
+				</ProductKey>
+				<AcceptEula>true</AcceptEula>
+			</UserData>
+			<UseConfigurationSet>false</UseConfigurationSet>
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo SELECT DISK=0&amp;echo CLEAN&amp;echo CONVERT GPT&amp;echo CREATE PARTITION EFI SIZE=300&amp;echo FORMAT QUICK FS=FAT32 LABEL="System"&amp;echo CREATE PARTITION MSR SIZE=16)"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo CREATE PARTITION PRIMARY&amp;echo SHRINK MINIMUM=1000&amp;echo FORMAT QUICK FS=NTFS LABEL="Windows"&amp;echo CREATE PARTITION PRIMARY&amp;echo FORMAT QUICK FS=NTFS LABEL="Recovery")"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo SET ID="de94bba4-06d1-4d40-a16a-bfd50179d6ac"&amp;echo GPT ATTRIBUTES=0x8000000000000001)"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>4</Order>
+					<Path>cmd.exe /c "diskpart.exe /s "X:\diskpart.txt" &gt;&gt;"X:\diskpart.log" || ( type "X:\diskpart.log" &amp; echo diskpart encountered an error. &amp; pause &amp; exit /b 1 )"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>5</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassTPMCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>6</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassSecureBootCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>7</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassRAMCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+		<component name="Microsoft-Windows-Setup" processorArchitecture="arm64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<ImageInstall>
+				<OSImage>
+					<InstallTo>
+						<DiskID>0</DiskID>
+						<PartitionID>3</PartitionID>
+					</InstallTo>
+				</OSImage>
+			</ImageInstall>
+			<UserData>
+				<ProductKey>
+					<Key>ALPHA-12BHJ-12BHJ-RTG84-APLHA</Key>
+					<WillShowUI>OnError</WillShowUI>
+				</ProductKey>
+				<AcceptEula>true</AcceptEula>
+			</UserData>
+			<UseConfigurationSet>false</UseConfigurationSet>
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo SELECT DISK=0&amp;echo CLEAN&amp;echo CONVERT GPT&amp;echo CREATE PARTITION EFI SIZE=300&amp;echo FORMAT QUICK FS=FAT32 LABEL="System"&amp;echo CREATE PARTITION MSR SIZE=16)"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo CREATE PARTITION PRIMARY&amp;echo SHRINK MINIMUM=1000&amp;echo FORMAT QUICK FS=NTFS LABEL="Windows"&amp;echo CREATE PARTITION PRIMARY&amp;echo FORMAT QUICK FS=NTFS LABEL="Recovery")"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo SET ID="de94bba4-06d1-4d40-a16a-bfd50179d6ac"&amp;echo GPT ATTRIBUTES=0x8000000000000001)"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>4</Order>
+					<Path>cmd.exe /c "diskpart.exe /s "X:\diskpart.txt" &gt;&gt;"X:\diskpart.log" || ( type "X:\diskpart.log" &amp; echo diskpart encountered an error. &amp; pause &amp; exit /b 1 )"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>5</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassTPMCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>6</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassSecureBootCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>7</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassRAMCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+		<component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<ImageInstall>
+				<OSImage>
+					<InstallTo>
+						<DiskID>0</DiskID>
+						<PartitionID>3</PartitionID>
+					</InstallTo>
+				</OSImage>
+			</ImageInstall>
+			<UserData>
+				<ProductKey>
+					<Key>ALPHA-12BHJ-12BHJ-RTG84-APLHA</Key>
+					<WillShowUI>OnError</WillShowUI>
+				</ProductKey>
+				<AcceptEula>true</AcceptEula>
+			</UserData>
+			<UseConfigurationSet>false</UseConfigurationSet>
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo SELECT DISK=0&amp;echo CLEAN&amp;echo CONVERT GPT&amp;echo CREATE PARTITION EFI SIZE=300&amp;echo FORMAT QUICK FS=FAT32 LABEL="System"&amp;echo CREATE PARTITION MSR SIZE=16)"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo CREATE PARTITION PRIMARY&amp;echo SHRINK MINIMUM=1000&amp;echo FORMAT QUICK FS=NTFS LABEL="Windows"&amp;echo CREATE PARTITION PRIMARY&amp;echo FORMAT QUICK FS=NTFS LABEL="Recovery")"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>cmd.exe /c "&gt;&gt;"X:\diskpart.txt" (echo SET ID="de94bba4-06d1-4d40-a16a-bfd50179d6ac"&amp;echo GPT ATTRIBUTES=0x8000000000000001)"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>4</Order>
+					<Path>cmd.exe /c "diskpart.exe /s "X:\diskpart.txt" &gt;&gt;"X:\diskpart.log" || ( type "X:\diskpart.log" &amp; echo diskpart encountered an error. &amp; pause &amp; exit /b 1 )"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>5</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassTPMCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>6</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassSecureBootCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>7</Order>
+					<Path>reg.exe add "HKLM\SYSTEM\Setup\LabConfig" /v BypassRAMCheck /t REG_DWORD /d 1 /f</Path>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+	</settings>
+	<settings pass="generalize"></settings>
+	<settings pass="specialize">
+		<component name="Microsoft-Windows-Deployment" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "$xml = [xml]::new(); $xml.Load('C:\Windows\Panther\unattend.xml'); $sb = [scriptblock]::Create( $xml.unattend.Extensions.ExtractScript ); Invoke-Command -ScriptBlock $sb -ArgumentList $xml;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\Specialize.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>reg.exe load "HKU\DefaultUser" "C:\Users\Default\NTUSER.DAT"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>4</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\DefaultUser.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>5</Order>
+					<Path>reg.exe unload "HKU\DefaultUser"</Path>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+		<component name="Microsoft-Windows-Deployment" processorArchitecture="arm64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "$xml = [xml]::new(); $xml.Load('C:\Windows\Panther\unattend.xml'); $sb = [scriptblock]::Create( $xml.unattend.Extensions.ExtractScript ); Invoke-Command -ScriptBlock $sb -ArgumentList $xml;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\Specialize.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>reg.exe load "HKU\DefaultUser" "C:\Users\Default\NTUSER.DAT"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>4</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\DefaultUser.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>5</Order>
+					<Path>reg.exe unload "HKU\DefaultUser"</Path>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+		<component name="Microsoft-Windows-Deployment" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<RunSynchronous>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "$xml = [xml]::new(); $xml.Load('C:\Windows\Panther\unattend.xml'); $sb = [scriptblock]::Create( $xml.unattend.Extensions.ExtractScript ); Invoke-Command -ScriptBlock $sb -ArgumentList $xml;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>2</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\Specialize.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>3</Order>
+					<Path>reg.exe load "HKU\DefaultUser" "C:\Users\Default\NTUSER.DAT"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>4</Order>
+					<Path>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\DefaultUser.ps1' -Raw | Invoke-Expression;"</Path>
+				</RunSynchronousCommand>
+				<RunSynchronousCommand wcm:action="add">
+					<Order>5</Order>
+					<Path>reg.exe unload "HKU\DefaultUser"</Path>
+				</RunSynchronousCommand>
+			</RunSynchronous>
+		</component>
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<TimeZone>W. Europe Standard Time</TimeZone>
+		</component>
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="arm64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<TimeZone>W. Europe Standard Time</TimeZone>
+		</component>
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<TimeZone>W. Europe Standard Time</TimeZone>
+		</component>
+	</settings>
+	<settings pass="auditSystem"></settings>
+	<settings pass="auditUser"></settings>
+	<settings pass="oobeSystem">
+		<component name="Microsoft-Windows-International-Core" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<InputLocale>041d:0000041d</InputLocale>
+			<SystemLocale>sv-SE</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>sv-SE</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-International-Core" processorArchitecture="arm64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<InputLocale>041d:0000041d</InputLocale>
+			<SystemLocale>sv-SE</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>sv-SE</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<InputLocale>041d:0000041d</InputLocale>
+			<SystemLocale>sv-SE</SystemLocale>
+			<UILanguage>en-US</UILanguage>
+			<UserLocale>sv-SE</UserLocale>
+		</component>
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<UserAccounts>
+				<LocalAccounts>
+					<LocalAccount wcm:action="add">
+						<Name>ladmin</Name>
+						<DisplayName></DisplayName>
+						<Group>Administrators</Group>
+						<Password>
+							<Value>ZwB4AHgAMwB6AGMAeAAyADAAMQAwAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+							<PlainText>false</PlainText>
+						</Password>
+					</LocalAccount>
+				</LocalAccounts>
+			</UserAccounts>
+			<AutoLogon>
+				<Username>ladmin</Username>
+				<Enabled>true</Enabled>
+				<LogonCount>1</LogonCount>
+				<Password>
+					<Value>ZwB4AHgAMwB6AGMAeAAyADAAMQAwAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+					<PlainText>false</PlainText>
+				</Password>
+			</AutoLogon>
+			<OOBE>
+				<ProtectYourPC>3</ProtectYourPC>
+				<HideEULAPage>true</HideEULAPage>
+				<HideOnlineAccountScreens>false</HideOnlineAccountScreens>
+			</OOBE>
+			<FirstLogonCommands>
+				<SynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<CommandLine>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\FirstLogon.ps1' -Raw | Invoke-Expression;"</CommandLine>
+				</SynchronousCommand>
+			</FirstLogonCommands>
+		</component>
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="arm64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<UserAccounts>
+				<LocalAccounts>
+					<LocalAccount wcm:action="add">
+						<Name>ladmin</Name>
+						<DisplayName></DisplayName>
+						<Group>Administrators</Group>
+						<Password>
+							<Value>ZwB4AHgAMwB6AGMAeAAyADAAMQAwAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+							<PlainText>false</PlainText>
+						</Password>
+					</LocalAccount>
+				</LocalAccounts>
+			</UserAccounts>
+			<AutoLogon>
+				<Username>ladmin</Username>
+				<Enabled>true</Enabled>
+				<LogonCount>1</LogonCount>
+				<Password>
+					<Value>ZwB4AHgAMwB6AGMAeAAyADAAMQAwAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+					<PlainText>false</PlainText>
+				</Password>
+			</AutoLogon>
+			<OOBE>
+				<ProtectYourPC>3</ProtectYourPC>
+				<HideEULAPage>true</HideEULAPage>
+				<HideOnlineAccountScreens>false</HideOnlineAccountScreens>
+			</OOBE>
+			<FirstLogonCommands>
+				<SynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<CommandLine>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\FirstLogon.ps1' -Raw | Invoke-Expression;"</CommandLine>
+				</SynchronousCommand>
+			</FirstLogonCommands>
+		</component>
+		<component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+			<UserAccounts>
+				<LocalAccounts>
+					<LocalAccount wcm:action="add">
+						<Name>ladmin</Name>
+						<DisplayName></DisplayName>
+						<Group>Administrators</Group>
+						<Password>
+							<Value>ZwB4AHgAMwB6AGMAeAAyADAAMQAwAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+							<PlainText>false</PlainText>
+						</Password>
+					</LocalAccount>
+				</LocalAccounts>
+			</UserAccounts>
+			<AutoLogon>
+				<Username>ladmin</Username>
+				<Enabled>true</Enabled>
+				<LogonCount>1</LogonCount>
+				<Password>
+					<Value>ZwB4AHgAMwB6AGMAeAAyADAAMQAwAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+					<PlainText>false</PlainText>
+				</Password>
+			</AutoLogon>
+			<OOBE>
+				<ProtectYourPC>3</ProtectYourPC>
+				<HideEULAPage>true</HideEULAPage>
+				<HideOnlineAccountScreens>false</HideOnlineAccountScreens>
+			</OOBE>
+			<FirstLogonCommands>
+				<SynchronousCommand wcm:action="add">
+					<Order>1</Order>
+					<CommandLine>powershell.exe -WindowStyle Normal -NoProfile -Command "Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\FirstLogon.ps1' -Raw | Invoke-Expression;"</CommandLine>
+				</SynchronousCommand>
+			</FirstLogonCommands>
+		</component>
+	</settings>
+	<Extensions xmlns="https://schneegans.de/windows/unattend-generator/">
+		<ExtractScript>
+param(
+    [xml] $Document
+);
+
+foreach( $file in $Document.unattend.Extensions.File ) {
+    $path = [System.Environment]::ExpandEnvironmentVariables( $file.GetAttribute( 'path' ) );
+    mkdir -Path( $path | Split-Path -Parent ) -ErrorAction 'SilentlyContinue';
+    $encoding = switch( [System.IO.Path]::GetExtension( $path ) ) {
+        { $_ -in '.ps1', '.xml' } { [System.Text.Encoding]::UTF8; }
+        { $_ -in '.reg', '.vbs', '.js' } { [System.Text.UnicodeEncoding]::new( $false, $true ); }
+        default { [System.Text.Encoding]::Default; }
+    };
+    $bytes = $encoding.GetPreamble() + $encoding.GetBytes( $file.InnerText.Trim() );
+    [System.IO.File]::WriteAllBytes( $path, $bytes );
+}
+		</ExtractScript>
+		<File path="C:\Windows\Setup\Scripts\RemovePackages.ps1">
+$selectors = @(
+	'Microsoft.Microsoft3DViewer';
+	'Microsoft.BingSearch';
+	'Clipchamp.Clipchamp';
+	'Microsoft.549981C3F5F10';
+	'Microsoft.Windows.DevHome';
+	'MicrosoftCorporationII.MicrosoftFamily';
+	'Microsoft.WindowsFeedbackHub';
+	'Microsoft.GetHelp';
+	'Microsoft.Getstarted';
+	'microsoft.windowscommunicationsapps';
+	'Microsoft.WindowsMaps';
+	'Microsoft.MixedReality.Portal';
+	'Microsoft.BingNews';
+	'Microsoft.MicrosoftOfficeHub';
+	'Microsoft.OutlookForWindows';
+	'Microsoft.MSPaint';
+	'Microsoft.People';
+	'MicrosoftCorporationII.QuickAssist';
+	'Microsoft.SkypeApp';
+	'Microsoft.MicrosoftSolitaireCollection';
+	'MicrosoftTeams';
+	'MSTeams';
+	'Microsoft.Wallet';
+	'Microsoft.Xbox.TCUI';
+	'Microsoft.XboxApp';
+	'Microsoft.XboxGameOverlay';
+	'Microsoft.XboxGamingOverlay';
+	'Microsoft.XboxIdentityProvider';
+	'Microsoft.XboxSpeechToTextOverlay';
+	'Microsoft.GamingApp';
+	'Microsoft.YourPhone';
+);
+$getCommand = {
+  Get-AppxProvisionedPackage -Online;
+};
+$filterCommand = {
+  $_.DisplayName -eq $selector;
+};
+$removeCommand = {
+  [CmdletBinding()]
+  param(
+    [Parameter( Mandatory, ValueFromPipeline )]
+    $InputObject
+  );
+  process {
+    $InputObject | Remove-AppxProvisionedPackage -AllUsers -Online -ErrorAction 'Continue';
+  }
+};
+$type = 'Package';
+$logfile = 'C:\Windows\Setup\Scripts\RemovePackages.log';
+&amp; {
+	$installed = &amp; $getCommand;
+	foreach( $selector in $selectors ) {
+		$result = [ordered] @{
+			Selector = $selector;
+		};
+		$found = $installed | Where-Object -FilterScript $filterCommand;
+		if( $found ) {
+			$result.Output = $found | &amp; $removeCommand;
+			if( $? ) {
+				$result.Message = "$type removed.";
+			} else {
+				$result.Message = "$type not removed.";
+				$result.Error = $Error[0];
+			}
+		} else {
+			$result.Message = "$type not installed.";
+		}
+		$result | ConvertTo-Json -Depth 3 -Compress;
+	}
+} *&gt;&amp;1 &gt;&gt; $logfile;
+		</File>
+		<File path="C:\Windows\Setup\Scripts\RemoveCapabilities.ps1">
+$selectors = @(
+	'Browser.InternetExplorer';
+	'App.Support.QuickAssist';
+	'App.StepsRecorder';
+	'Microsoft.Windows.WordPad';
+);
+$getCommand = {
+  Get-WindowsCapability -Online | Where-Object -Property 'State' -NotIn -Value @(
+    'NotPresent';
+    'Removed';
+  );
+};
+$filterCommand = {
+  ($_.Name -split '~')[0] -eq $selector;
+};
+$removeCommand = {
+  [CmdletBinding()]
+  param(
+    [Parameter( Mandatory, ValueFromPipeline )]
+    $InputObject
+  );
+  process {
+    $InputObject | Remove-WindowsCapability -Online -ErrorAction 'Continue';
+  }
+};
+$type = 'Capability';
+$logfile = 'C:\Windows\Setup\Scripts\RemoveCapabilities.log';
+&amp; {
+	$installed = &amp; $getCommand;
+	foreach( $selector in $selectors ) {
+		$result = [ordered] @{
+			Selector = $selector;
+		};
+		$found = $installed | Where-Object -FilterScript $filterCommand;
+		if( $found ) {
+			$result.Output = $found | &amp; $removeCommand;
+			if( $? ) {
+				$result.Message = "$type removed.";
+			} else {
+				$result.Message = "$type not removed.";
+				$result.Error = $Error[0];
+			}
+		} else {
+			$result.Message = "$type not installed.";
+		}
+		$result | ConvertTo-Json -Depth 3 -Compress;
+	}
+} *&gt;&amp;1 &gt;&gt; $logfile;
+		</File>
+		<File path="C:\Windows\Setup\Scripts\Wifi.xml">
+&lt;WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1"&gt;
+	&lt;name&gt;Molmed&lt;/name&gt;
+	&lt;SSIDConfig&gt;
+		&lt;SSID&gt;
+			&lt;hex&gt;4D6F6C6D6564&lt;/hex&gt;
+			&lt;name&gt;Molmed&lt;/name&gt;
+		&lt;/SSID&gt;
+	&lt;/SSIDConfig&gt;
+	&lt;connectionType&gt;ESS&lt;/connectionType&gt;
+	&lt;connectionMode&gt;auto&lt;/connectionMode&gt;
+	&lt;MSM&gt;
+		&lt;security&gt;
+			&lt;authEncryption&gt;
+				&lt;authentication&gt;WPA2PSK&lt;/authentication&gt;
+				&lt;encryption&gt;AES&lt;/encryption&gt;
+				&lt;useOneX&gt;false&lt;/useOneX&gt;
+			&lt;/authEncryption&gt;
+			&lt;sharedKey&gt;
+				&lt;keyType&gt;passPhrase&lt;/keyType&gt;
+				&lt;protected&gt;false&lt;/protected&gt;
+				&lt;keyMaterial&gt;internet@molmed&lt;/keyMaterial&gt;
+			&lt;/sharedKey&gt;
+		&lt;/security&gt;
+	&lt;/MSM&gt;
+&lt;/WLANProfile&gt;
+		</File>
+		<File path="C:\Windows\Setup\Scripts\SetStartPins.ps1">
+$json = '{"pinnedList":[]}';
+if( [System.Environment]::OSVersion.Version.Build -lt 20000 ) {
+	return;
+}
+$key = 'Registry::HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Start';
+New-Item -Path $key -ItemType 'Directory' -ErrorAction 'SilentlyContinue';
+Set-ItemProperty -LiteralPath $key -Name 'ConfigureStartPins' -Value $json -Type 'String';
+		</File>
+		<File path="C:\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.xml">
+&lt;LayoutModificationTemplate Version="1" xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"&gt;
+	&lt;LayoutOptions StartTileGroupCellWidth="6" /&gt;
+	&lt;DefaultLayoutOverride&gt;
+		&lt;StartLayoutCollection&gt;
+			&lt;StartLayout GroupCellWidth="6" xmlns="http://schemas.microsoft.com/Start/2014/FullDefaultLayout" /&gt;
+		&lt;/StartLayoutCollection&gt;
+	&lt;/DefaultLayoutOverride&gt;
+&lt;/LayoutModificationTemplate&gt;
+		</File>
+		<File path="C:\Windows\Setup\Scripts\unattend-01.cmd">
+w32tm /config /manualpeerlist:'ntp.ki.se' /syncfromflags:MANUAL /reliable:yes
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Feeds" -Name "ShellFeedsTaskbarOpenOnHover" -PropertyType DWORD -Value 0 -Force
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Search" -Name "EnableDynamicContentInWSB" -PropertyType DWORD -Value 0 -Force
+		</File>
+		<File path="C:\Windows\Setup\Scripts\unattend-02.cmd">
+w32tm /config /manualpeerlist:'ntp.ki.se' /syncfromflags:MANUAL /reliable:yes
+		</File>
+		<File path="C:\Windows\Setup\Scripts\unattend-03.ps1">
+# Script made by Mattias Magnusson 2025-09-20
+# Dynamically installs applications from a JSON list hosted online
+# Updated 2025-08-12 by Mattias Magnusson
+
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+$tp = "C:\TempPath"
+$tl = "C:\InstallLogs"
+mkdir $tp -Force | Out-Null
+$logPath = "$tl\install_log.txt"
+$deployment_id = "cheeseburger"
+New-Item -Path $logPath -ItemType File -Force | Out-Null
+
+function Test-InternetConnection {
+    try {
+        $null = Invoke-WebRequest -Uri "https://deploysmart.dev.mspot.se" -UseBasicParsing -TimeoutSec 5
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+# Network test form
+$formNetwork = New-Object System.Windows.Forms.Form
+$formNetwork.Text = "Network Test"
+$formNetwork.Size = New-Object System.Drawing.Size(300,150)
+$formNetwork.StartPosition = "CenterScreen"
+
+$labelStatus = New-Object System.Windows.Forms.Label
+$labelStatus.Size = New-Object System.Drawing.Size(280,30)
+$labelStatus.Location = New-Object System.Drawing.Point(10,10)
+$labelStatus.Text = "Testing network connection..."
+$formNetwork.Controls.Add($labelStatus)
+
+$buttonRetry = New-Object System.Windows.Forms.Button
+$buttonRetry.Size = New-Object System.Drawing.Size(100,30)
+$buttonRetry.Location = New-Object System.Drawing.Point(10,50)
+$buttonRetry.Text = "Try Again"
+$buttonRetry.Add_Click({
+    $labelStatus.Text = "Testing network connection..."
+    $formNetwork.Refresh()
+    if (Test-InternetConnection) {
+        [System.Windows.Forms.MessageBox]::Show("Network connection is OK", "Success", 'OK', 'Information')
+        $formNetwork.Close()
+    } else {
+        [System.Windows.Forms.MessageBox]::Show("No internet connection. Please connect and try again.", "Error", 'RetryCancel', 'Error')
+    }
+})
+$formNetwork.Controls.Add($buttonRetry)
+
+$buttonCancel = New-Object System.Windows.Forms.Button
+$buttonCancel.Size = New-Object System.Drawing.Size(100,30)
+$buttonCancel.Location = New-Object System.Drawing.Point(120,50)
+$buttonCancel.Text = "Cancel"
+$buttonCancel.Add_Click({
+    $formNetwork.Close()
+    exit 1
+})
+$formNetwork.Controls.Add($buttonCancel)
+
+$formNetwork.Show()
+$formNetwork.Refresh()
+if (Test-InternetConnection) {
+    $formNetwork.Close()
+} else {
+    [System.Windows.Forms.MessageBox]::Show("No internet connection. Please connect and try again.", "Error", 'RetryCancel', 'Error')
+}
+
+# Load application list
+$jsonUrl = "https://deploysmart.dev.se/config/$deployment_id/applications.json"
+try {
+    $applications = Invoke-RestMethod -Uri $jsonUrl -UseBasicParsing
+} catch {
+    [System.Windows.Forms.MessageBox]::Show("Failed to load application list from $jsonUrl please send this to the administrator at deploysmart.", "Error", 'OK', 'Error')
+    exit 1
+}
+
+# Installation form
+$formInstall = New-Object System.Windows.Forms.Form
+$formInstall.Text = "Installing Applications"
+$formInstall.Size = New-Object System.Drawing.Size(400,300)
+$formInstall.StartPosition = "Manual"
+$formInstall.Location = New-Object System.Drawing.Point(80, 80)
+
+$labelInfo = New-Object System.Windows.Forms.Label
+$labelInfo.Size = New-Object System.Drawing.Size(360, 40)
+$labelInfo.Location = New-Object System.Drawing.Point(10, 10)
+$labelInfo.Text = "This may take a while. Please leave the computer on and do not close this window until the installation is complete."
+$labelInfo.AutoSize = $false
+$labelInfo.TextAlign = 'TopLeft'
+$labelInfo.Font = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing.FontStyle]::Regular)
+$formInstall.Controls.Add($labelInfo)
+
+$listBox = New-Object System.Windows.Forms.ListBox
+$listBox.Size = New-Object System.Drawing.Size(360,190)
+$listBox.Location = New-Object System.Drawing.Point(10, 60)
+$formInstall.Controls.Add($listBox)
+
+foreach ($app in $applications) {
+    $listBox.Items.Add("⏳ Waiting: $($app.Name)")
+}
+
+$formInstall.Show()
+
+$failedApps = @()
+
+# First pass
+for ($i = 0; $i -lt $applications.Count; $i++) {
+    $app = $applications[$i]
+    $listBox.Items[$i] = "🔧 Installing: $($app.Name)"
+    $formInstall.Refresh()
+    try {
+        irm $app.Url | iex
+        $listBox.Items[$i] = "✅ Installed: $($app.Name)"
+    } catch {
+        $listBox.Items[$i] = "❌ Failed: $($app.Name)"
+        $errorMessage = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Failed to install $($app.Name): $($_.Exception.Message)"
+        Add-Content -Path $logPath -Value $errorMessage
+        $failedApps += $app
+    }
+    Start-Sleep -Seconds 1
+}
+
+# Retry pass
+if ($failedApps.Count -gt 0) {
+    Add-Content -Path $logPath -Value "`n--- RETRYING FAILED INSTALLATIONS ---`n"
+    foreach ($app in $failedApps) {
+        $index = $applications.IndexOf($app)
+        $listBox.Items[$index] = "🔁 Retrying: $($app.Name)"
+        $formInstall.Refresh()
+        try {
+            irm $app.Url | iex
+            $listBox.Items[$index] = "✅ Installed on Retry: $($app.Name)"
+        } catch {
+            $listBox.Items[$index] = "❌ Still Failed: $($app.Name)"
+            $errorMessage = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Retry failed for $($app.Name): $($_.Exception.Message)"
+            Add-Content -Path $logPath -Value $errorMessage
+        }
+        Start-Sleep -Seconds 1
+    }
+}
+
+Start-Sleep -Seconds 300
+$formInstall.Close()
+		</File>
+		<File path="C:\Windows\Setup\Scripts\unattend-04.ps1">
+irm https://mmk-dns1.mmk.ki.se/autounattended/scripts/Hostname.ps1 | iex
+		</File>
+		<File path="C:\Windows\Setup\Scripts\unattend-05.cmd">
+w32tm /config /manualpeerlist:'ntp.ki.se' /syncfromflags:MANUAL /reliable:yes
+		</File>
+		<File path="C:\Windows\Setup\Scripts\Specialize.ps1">
+$scripts = @(
+	{
+		reg.exe add "HKLM\SYSTEM\Setup\MoSetup" /v AllowUpgradesWithUnsupportedTPMOrCPU /t REG_DWORD /d 1 /f;
+	};
+	{
+		reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OOBE" /v BypassNRO /t REG_DWORD /d 1 /f;
+	};
+	{
+		Remove-Item -LiteralPath 'Registry::HKLM\Software\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\DevHomeUpdate' -Force -ErrorAction 'SilentlyContinue';
+	};
+	{
+		Remove-Item -LiteralPath 'Registry::HKLM\Software\Microsoft\WindowsUpdate\Orchestrator\UScheduler_Oobe\OutlookUpdate' -Force -ErrorAction 'SilentlyContinue';
+	};
+	{
+		reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Communications" /v ConfigureChatAutoInstall /t REG_DWORD /d 0 /f;
+	};
+	{
+		Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\RemovePackages.ps1' -Raw | Invoke-Expression;
+	};
+	{
+		Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\RemoveCapabilities.ps1' -Raw | Invoke-Expression;
+	};
+	{
+		netsh.exe wlan add profile filename="C:\Windows\Setup\Scripts\Wifi.xml" user=all;
+	};
+	{
+		netsh.exe wlan connect name="Molmed" ssid="Molmed";
+	};
+	{
+		net.exe accounts /maxpwage:UNLIMITED;
+	};
+	{
+		reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Dsh" /v AllowNewsAndInterests /t REG_DWORD /d 0 /f;
+	};
+	{
+		reg.exe add "HKLM\Software\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsConsumerFeatures" /t REG_DWORD /d 1 /f;
+	};
+	{
+		reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\BitLocker" /v "PreventDeviceEncryption" /t REG_DWORD /d 1 /f;
+	};
+	{
+		reg.exe add "HKLM\Software\Policies\Microsoft\Edge" /v HideFirstRunExperience /t REG_DWORD /d 1 /f;
+	};
+	{
+		reg.exe add "HKLM\Software\Policies\Microsoft\Edge\Recommended" /v BackgroundModeEnabled /t REG_DWORD /d 0 /f;
+		reg.exe add "HKLM\Software\Policies\Microsoft\Edge\Recommended" /v StartupBoostEnabled /t REG_DWORD /d 0 /f;
+	};
+	{
+		Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\SetStartPins.ps1' -Raw | Invoke-Expression;
+	};
+	{
+		C:\Windows\Setup\Scripts\unattend-01.cmd;
+	};
+);
+
+&amp; {
+  [float] $complete = 0;
+  [float] $increment = 100 / $scripts.Count;
+  foreach( $script in $scripts ) {
+    Write-Progress -Activity 'Running scripts to customize your Windows installation. Do not close this window.' -PercentComplete $complete;
+    '*** Will now execute command &#xAB;{0}&#xBB;.' -f $(
+      $str = $script.ToString().Trim() -replace '\s+', ' ';
+      $max = 100;
+      if( $str.Length -le $max ) {
+        $str;
+      } else {
+        $str.Substring( 0, $max - 1 ) + '&#x2026;';
+      }
+    );
+    $start = [datetime]::Now;
+    &amp; $script;
+    '*** Finished executing command after {0:0} ms.' -f [datetime]::Now.Subtract( $start ).TotalMilliseconds;
+    "`r`n" * 3;
+    $complete += $increment;
+  }
+} *&gt;&amp;1 &gt;&gt; "C:\Windows\Setup\Scripts\Specialize.log";
+		</File>
+		<File path="C:\Windows\Setup\Scripts\UserOnce.ps1">
+$scripts = @(
+	{
+		Get-AppxPackage -Name 'Microsoft.Windows.Ai.Copilot.Provider' | Remove-AppxPackage;
+	};
+	{
+		C:\Windows\Setup\Scripts\unattend-05.cmd;
+	};
+);
+
+&amp; {
+  [float] $complete = 0;
+  [float] $increment = 100 / $scripts.Count;
+  foreach( $script in $scripts ) {
+    Write-Progress -Activity 'Running scripts to configure this user account. Do not close this window.' -PercentComplete $complete;
+    '*** Will now execute command &#xAB;{0}&#xBB;.' -f $(
+      $str = $script.ToString().Trim() -replace '\s+', ' ';
+      $max = 100;
+      if( $str.Length -le $max ) {
+        $str;
+      } else {
+        $str.Substring( 0, $max - 1 ) + '&#x2026;';
+      }
+    );
+    $start = [datetime]::Now;
+    &amp; $script;
+    '*** Finished executing command after {0:0} ms.' -f [datetime]::Now.Subtract( $start ).TotalMilliseconds;
+    "`r`n" * 3;
+    $complete += $increment;
+  }
+} *&gt;&amp;1 &gt;&gt; "$env:TEMP\UserOnce.log";
+		</File>
+		<File path="C:\Windows\Setup\Scripts\DefaultUser.ps1">
+$scripts = @(
+	{
+		reg.exe add "HKU\DefaultUser\Software\Policies\Microsoft\Windows\WindowsCopilot" /v TurnOffWindowsCopilot /t REG_DWORD /d 1 /f;
+	};
+	{
+		reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v AppCaptureEnabled /t REG_DWORD /d 0 /f;
+	};
+	{
+		reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowTaskViewButton /t REG_DWORD /d 0 /f;
+	};
+	{
+		$names = @(
+		  'ContentDeliveryAllowed';
+		  'FeatureManagementEnabled';
+		  'OEMPreInstalledAppsEnabled';
+		  'PreInstalledAppsEnabled';
+		  'PreInstalledAppsEverEnabled';
+		  'SilentInstalledAppsEnabled';
+		  'SoftLandingEnabled';
+		  'SubscribedContentEnabled';
+		  'SubscribedContent-310093Enabled';
+		  'SubscribedContent-338387Enabled';
+		  'SubscribedContent-338388Enabled';
+		  'SubscribedContent-338389Enabled';
+		  'SubscribedContent-338393Enabled';
+		  'SubscribedContent-353698Enabled';
+		  'SystemPaneSuggestionsEnabled';
+		);
+		
+		foreach( $name in $names ) {
+		  reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v $name /t REG_DWORD /d 0 /f;
+		}
+	};
+	{
+		reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarAl /t REG_DWORD /d 0 /f;
+	};
+	{
+		reg.exe add "HKU\DefaultUser\Software\Policies\Microsoft\Windows\Explorer" /v DisableSearchBoxSuggestions /t REG_DWORD /d 1 /f;
+	};
+	{
+		reg.exe add "HKU\DefaultUser\Software\Microsoft\Windows\CurrentVersion\RunOnce" /v "UnattendedSetup" /t REG_SZ /d "powershell.exe -WindowStyle Normal -NoProfile -Command \""Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\UserOnce.ps1' -Raw | Invoke-Expression;\""" /f;
+	};
+);
+
+&amp; {
+  [float] $complete = 0;
+  [float] $increment = 100 / $scripts.Count;
+  foreach( $script in $scripts ) {
+    Write-Progress -Activity 'Running scripts to modify the default user&#x2019;&#x2019;s registry hive. Do not close this window.' -PercentComplete $complete;
+    '*** Will now execute command &#xAB;{0}&#xBB;.' -f $(
+      $str = $script.ToString().Trim() -replace '\s+', ' ';
+      $max = 100;
+      if( $str.Length -le $max ) {
+        $str;
+      } else {
+        $str.Substring( 0, $max - 1 ) + '&#x2026;';
+      }
+    );
+    $start = [datetime]::Now;
+    &amp; $script;
+    '*** Finished executing command after {0:0} ms.' -f [datetime]::Now.Subtract( $start ).TotalMilliseconds;
+    "`r`n" * 3;
+    $complete += $increment;
+  }
+} *&gt;&amp;1 &gt;&gt; "C:\Windows\Setup\Scripts\DefaultUser.log";
+		</File>
+		<File path="C:\Windows\Setup\Scripts\FirstLogon.ps1">
+$scripts = @(
+	{
+		Set-ItemProperty -LiteralPath 'Registry::HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoLogonCount' -Type 'DWord' -Force -Value 0;
+	};
+	{
+		C:\Windows\Setup\Scripts\unattend-02.cmd;
+	};
+	{
+		Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\unattend-03.ps1' -Raw | Invoke-Expression;
+	};
+	{
+		Get-Content -LiteralPath 'C:\Windows\Setup\Scripts\unattend-04.ps1' -Raw | Invoke-Expression;
+	};
+);
+
+&amp; {
+  [float] $complete = 0;
+  [float] $increment = 100 / $scripts.Count;
+  foreach( $script in $scripts ) {
+    Write-Progress -Activity 'Running scripts to finalize your Windows installation. Do not close this window.' -PercentComplete $complete;
+    '*** Will now execute command &#xAB;{0}&#xBB;.' -f $(
+      $str = $script.ToString().Trim() -replace '\s+', ' ';
+      $max = 100;
+      if( $str.Length -le $max ) {
+        $str;
+      } else {
+        $str.Substring( 0, $max - 1 ) + '&#x2026;';
+      }
+    );
+    $start = [datetime]::Now;
+    &amp; $script;
+    '*** Finished executing command after {0:0} ms.' -f [datetime]::Now.Subtract( $start ).TotalMilliseconds;
+    "`r`n" * 3;
+    $complete += $increment;
+  }
+} *&gt;&amp;1 &gt;&gt; "C:\Windows\Setup\Scripts\FirstLogon.log";
+		</File>
+	</Extensions>
+</unattend>

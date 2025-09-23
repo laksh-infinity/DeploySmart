@@ -1,0 +1,94 @@
+[
+    {
+        "Name": "Adobe Reader DC",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Adobe_Reader_DC.ps1"
+    },
+    {
+        "Name": "BCUninstaller",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/BCUninstaller.ps1"
+    },
+    {
+        "Name": "Brave",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Brave.ps1"
+    },
+    {
+        "Name": "ClamAV",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/ClamAV.ps1"
+    },
+    {
+        "Name": "Cleanup",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Cleanup.ps1"
+    },
+    {
+        "Name": "Firefox",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Firefox.ps1"
+    },
+    {
+        "Name": "Google Chrome",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Google_Chrome.ps1"
+    },
+    {
+        "Name": "Krita",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Krita.ps1"
+    },
+    {
+        "Name": "Microsoft Edge",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Microsoft_Edge.ps1"
+    },
+    {
+        "Name": "Microsoft Office 365",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Microsoft_Office_365.ps1"
+    },
+    {
+        "Name": "Microsoft Office PP 2024 LTSC",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Microsoft_Office_PP_2024_LTSC.ps1"
+    },
+    {
+        "Name": "Microsoft PC Health Check",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Microsoft_PC_Health_Check.ps1"
+    },
+    {
+        "Name": "Notepad PlusPlus",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Notepad_PlusPlus.ps1"
+    },
+    {
+        "Name": "OpenShot",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/OpenShot.ps1"
+    },
+    {
+        "Name": "PDFGear",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/PDFGear.ps1"
+    },
+    {
+        "Name": "Spotify",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Spotify.ps1"
+    },
+    {
+        "Name": "TotalCommander",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/TotalCommander.ps1"
+    },
+    {
+        "Name": "VLC",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/VLC.ps1"
+    },
+    {
+        "Name": "VSCode",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/VSCode.ps1"
+    },
+    {
+        "Name": "Windows Update Install",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Windows_Update_Install.ps1"
+    },
+    {
+        "Name": "Zoom",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/Zoom.ps1"
+    },
+    {
+        "Name": "iTunes",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/iTunes.ps1"
+    },
+    {
+        "Name": "7-zip",
+        "Url": "https://deploysmart.dev.mspot.se/deployment/scripts/apps/7-zip.ps1"
+    }
+]

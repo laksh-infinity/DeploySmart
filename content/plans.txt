@@ -1,0 +1,24 @@
+<!--
+	<div class="block">
+      	<p class="date">Date goes here</p>
+		<h3>Title goes here</h3>
+		<p>
+Text goes here
+		</p>
+	</div>
+
+-->
+<div class="block">
+      	<p class="date">Soon</p>
+		<h3>Fix curse</h3>
+		<p>
+Fix issue with autounattended generator taking over profile completely (cursed in MSP/multi-company setups).
+		</p>
+	</div>
+	<div class="block">
+      	<p class="date">Sometime</p>
+		<h3>More options in the autounattend.xml file</h3>
+		<p>
+Well, some may want to make even more changes and customizations to their Windows install, one could use <a href="https://schneegans.de/windows/unattend-generator/">schneegans unattend generator</a> and be perfectly fine with that, but in order to "compete" i might actually need something more powerful, or atleast as powerful as theirs. It may take quite a while before i get there and im not even sure if i will get there (EVER). But one got to try at least :)
+		</p>
+	</div>
