@@ -1,15 +1,14 @@
 # DeploySmart
 DeploySmart is an application to ease sys admin setup of new/reinstall computers by utilizing autounattend.xml and powershell to install applications from a list easier.
 
-Alright, i have tried to clean this up to the best i can (today).
+Alright, i have tried to clean this up to the best i can (today 2025-09-23).
 
 If you decide to run this, please do so on a localhost for now as there might be breaking changes as well as security issues involved, this is one of my first projects to this big.
 
-## Default admin:
-admin@example.com
-Admin123456!
-
-Don't forget to change password and enable TOTP/MFA from Profile Settings.
+## Prerequisites:
+PHP 8.2+
+Mysql 8+
+Apache2/Nginx
 
 ## How to use this:
 
@@ -22,9 +21,23 @@ Don't forget to change password and enable TOTP/MFA from Profile Settings.
 7. Now Create a USB drive with any standard Windows 10/11 iso and put your autounattend.xml on that USB and re/install a machine.
 8. Enjoy!
 
+## Default login:
+admin@example.com
+Admin123456!
+
+Don't forget to change password and enable TOTP/MFA from Profile Settings.
+
 ## Adding .ps1 scripts to the "🌐 Global" tab
 All .ps1 scripts put in the /deployment/scripts/apps/ folder will automatically get added if cron is correctly setup against cron.php.
 
 If you find something that needs to be fixed, im sorry, im just one person trying my best.
 
-### Im currently cleaning up my old configuration files, cleaning out any eventual passwords and other sensitive stuff.
+## What's next?
+
+1. Install script to easier set this up.
+2. Internal guide to make the learning curve easy to understand.
+3. UI/UX changes to have abetter over all style and feel (Mobile variant).
+
+## Issues?
+
+Plese use the issue tracker here. No guidelines for now, all information is good information.
