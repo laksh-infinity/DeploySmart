@@ -7,6 +7,7 @@ Add-Type -AssemblyName System.Drawing
 $tp = "C:\TempPath"
 $tl = "C:\logs"
 $ID = "{DEPLOYMENT_ID}"
+$DOMAIN = "Toothbrush"
 
 # Installer Form
 $formInstall = New-Object System.Windows.Forms.Form
@@ -54,7 +55,7 @@ $formInstall.Controls.Add($listBox)
 $formInstall.Show()
 
 # Load application list
-$jsonUrl = "https://deploysmart.dev.mspot.se/config/$ID/applications.json"
+$jsonUrl = "$DOMAIN/config/$ID/applications.json"
 $logPath = "C:\InstallLogs\install_log.txt"
 New-Item -Path $logPath -ItemType File -Force | Out-Null
 
