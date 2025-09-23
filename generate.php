@@ -122,20 +122,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ENT_NOQUOTES
     );
 
-    $template_path = DEPLOYSMART_TEMP_DIR;
-
+    $template_path = __DIR__ . '/templates/autounattend.template.xml';
     if (!file_exists($template_path)) {
         die("Template file not found.");
     }
 
     $template = file_get_contents($template_path);
     $modified_xml = str_replace(
-        ['Cheeseburger', '00000-00000-00000-00000-00000', '{{ADMIN_USERNAME}}', '{{ADMIN_PASSWORD}}', '{{WLAN_PROFILE}}', '{{WIFI_SSID}}'],
-        [$directory_id, $product_key, $admin_username, $obfuscated_password, $wlan_profile, $wifi_ssid],
+        ['Cheeseburger', 'Toothbrush', '00000-00000-00000-00000-00000', '{{ADMIN_USERNAME}}', '{{ADMIN_PASSWORD}}', '{{WLAN_PROFILE}}', '{{WIFI_SSID}}'],
+        [$directory_id, DEPLOYSMART_BASE_URL, $product_key, $admin_username, $obfuscated_password, $wlan_profile, $wifi_ssid],
         $template
     );
 
-    $workingDir = '/home/mspot-deploysmart-dev/tmp';
+    $workingDir = dirname(__DIR__) . '/tmp';
     $sessionDir = $workingDir . '/' . session_id();
     if (!is_dir($sessionDir)) {
         mkdir($sessionDir, 0700, true);
