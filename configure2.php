@@ -58,6 +58,9 @@ if (!file_exists($jsonFile)) {
     <script>
         const directoryId = "<?php echo $directory_id; ?>";
     </script>
+	<script>
+		const DEPLOYSMART_BASE_URL = "<?php echo DEPLOYSMART_BASE_URL; ?>";
+	</script>
     <script src="./assets/app2.js"></script>
 <div id="confirm-modal" class="modal" style="display:none;">
     <div class="modal-content">
