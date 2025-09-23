@@ -22,4 +22,9 @@ Don't forget to change password and enable TOTP/MFA from Profile Settings.
 7. Now Create a USB drive with any standard Windows 10/11 iso and put your autounattend.xml on that USB and re/install a machine.
 8. Enjoy!
 
+## Adding .ps1 scripts to the "🌐 Global" tab
+All .ps1 scripts put in the /deployment/scripts/apps/ folder will automatically get added if cron is correctly setup against cron.php.
+
 If you find something that needs to be fixed, im sorry, im just one person trying my best.
+
+### Im currently cleaning up my old configuration files, cleaning out any eventual passwords and other sensitive stuff.
