@@ -39,7 +39,7 @@ If you find something that needs to be fixed, im sorry, im just one person tryin
 
 ## What's next?
 
-1. Installer script to make it easier yo set up.
+1. Installer script to make it easier to set up.
 2. Internal guide to make the learning curve fast and easy.
 3. UI/UX changes to have abetter over all style and feel (Mobile variant).
 4. More automated applications.
