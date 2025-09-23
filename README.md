@@ -1,4 +1,5 @@
-# DeploySmart
+# $${\color{white}Deploy\color{#0fda00}Smart}$$
+
 DeploySmart is an application to ease sys admin setup of new/reinstall computers by utilizing autounattend.xml and powershell to install applications from a list easier.
 
 Alright, i have tried to clean this up to the best i can (today 2025-09-23).
@@ -40,4 +41,4 @@ If you find something that needs to be fixed, im sorry, im just one person tryin
 
 ## Issues?
 
-Plese use the issue tracker here. No guidelines for now, all information is good information.
+Please use the issue tracker here. No guidelines for now, all information is good information.
